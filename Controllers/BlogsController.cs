@@ -1,7 +1,8 @@
 using blog.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace blog.Controllers;
+namespace intro.Controllers;
 
 [Route("")]
 public class BlogsController : Controller
@@ -41,17 +42,19 @@ public class BlogsController : Controller
         });
     }
 
+    [Authorize]
     [HttpGet("write")]
     public IActionResult Write()
     {
         return View();
     }
 
+    [Authorize]
     [HttpPost("write")]
     public IActionResult Write([FromForm]PostViewModel model)
     {
         model.Edited = model.CreatedAt != default;
-        model.CreatedAt = DateTime.UtcNow.ToLocalTime();
+        model.CreatedAt = DateTimeOffset.UtcNow;
         model.Id = Guid.NewGuid();
 
         Blogs.Add(model);
@@ -73,4 +76,18 @@ public class BlogsController : Controller
 
         return View("Write", model);
     }
+}
+
+public class PostViewModel
+{
+    public Guid Id { get; set; }
+    
+    public DateTimeOffset CreatedAt { get; set; }
+    
+    public string Title { get; set; }
+    
+    public string Content { get; set; }
+
+    public bool Edited { get; set; }
+    
 }

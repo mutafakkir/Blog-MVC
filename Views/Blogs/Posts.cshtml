@@ -4,12 +4,14 @@
 
     <div class="d-inline mx-2">
       <h2 class="bg-light">@Model.Title</h2>
-      <a class="btn btn-outline-primary" href="/edit/@Model.Id">Edit</a>
+      <div style="position: absolute; right: 350px; top: 115px;">
+      <a class="btn btn-outline-dark" href="/edit/@Model.Id">Edit</a> 
+      </div>
     </div>
-    <span class="text-muted" >@Model.CreatedAt</span>
     @if(Model.Edited)
     {
       <span class="text-muted" >Edited</span>
     }
     @Html.Raw(Model.Content)
+    <span class="text-muted" >@Model.CreatedAt.ToString("dd MMM yyy HH:mm")</span>
   </div>

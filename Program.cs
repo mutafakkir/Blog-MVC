@@ -1,12 +1,26 @@
 using blog.Data;
+using blog.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<BlogAppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BlogConnection"));
+});
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<BlogAppDbContext>();
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PostContext>(options
-=>options.UseSqlServer(builder.Configuration.GetConnectionString("BlogConnection")));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -24,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

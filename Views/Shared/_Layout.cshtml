@@ -25,11 +25,11 @@
     @Html.Partial("_HeaderPartial")
 
     @RenderBody()
+    
 
     @await RenderSectionAsync("Scripts", required: false)
 
-
-
+    <script src="~/lib/quilljs/moment.js"></script>
     <script src="~/lib/quilljs/quill.min.js"></script>
     <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -2,11 +2,10 @@
 
 @if (Model.Blogs == null || Model.Blogs.Count() < 1)
 {
-    <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">No posts ☹️</h4>
-    <p>There are no posts yet. Please write one or come again some other time!</p>
-    <hr>
-    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+
+<div class="alert alert-warning alert-dismissible fade show">
+    <strong>Attention!</strong> There are no posts yet. Please write one or come again some other time!
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 }
 else
